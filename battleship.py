@@ -143,6 +143,7 @@ while True:
     
     if player_hits == sum(ship_sizes):
         print("Player has won - game over")
+        playsound('win.wav')
         break
 
     # Computer's turn
@@ -175,6 +176,7 @@ while True:
     
     if comp_hits == sum(ship_sizes):
         print("Computer has won - game over")
+        playsound('loss.wav')
         break
 
     print(f"Player {user_name} board")
