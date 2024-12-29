@@ -3,10 +3,9 @@ from playsound import playsound
 
 ship_sizes = [5, 4, 3, 3, 2]
 ship_names = ["Carrier", "Battleship", "Cruiser", "Submarine", "Destroyer"]
-map_size = 10  # Map size changed to 10x10
-row_labels = "ABCDEFGHIJ"  # Row labels A-J
+map_size = 10
+row_labels = "ABCDEFGHIJ"
 
-# Get username
 while True:
     user_name = input("Enter your name: ")
     if user_name:
@@ -15,25 +14,21 @@ while True:
     else:
         print("Please enter your name.")
 
-# Create battlefield
 player_board = [["_"] * map_size for _ in range(map_size)]
 comp_board = [["_"] * map_size for _ in range(map_size)]
 dummy_board = [["_"] * map_size for _ in range(map_size)]
 
-# Track ship positions
 player_ships = []
 comp_ships = []
 
-# Track sunk ships
 player_sunk_ships = []
 comp_sunk_ships = []
 
-# Display battlefield
-print("  " + " ".join(str(i + 1) for i in range(len(player_board[0]))))  # Display 1-10 for columns
+print("  " + " ".join(str(i + 1) for i in range(len(player_board[0]))))
 for i, row in enumerate(player_board):
-    print(row_labels[i] + " " + " ".join(row))  # Display A-J for rows
-
-# Place ships for player
+    print(row_labels[i] + " " + " ".join(row))
+    
+# player ships placement loop:
 for size, name in zip(ship_sizes, ship_names):
     while True:
         try:
@@ -65,17 +60,16 @@ for size, name in zip(ship_sizes, ship_names):
                             player_board[row + i][col] = "S"
                             ship_positions.append((row + i, col))
                     player_ships.append((name, size, ship_positions))
-                    # Display the board after placing the ship
-                    print("  " + " ".join(str(i + 1) for i in range(len(player_board[0]))))  # Display 1-10 for columns
+                    print("  " + " ".join(str(i + 1) for i in range(len(player_board[0]))))
                     for i, row in enumerate(player_board):
-                        print(row_labels[i] + " " + " ".join(row))  # Display A-J for rows
+                        print(row_labels[i] + " " + " ".join(row))
                     break
                 else:
                     print("Invalid coordinates or orientation. Please enter correct values.")
         except ValueError:
             print("Invalid input. Please enter a valid row letter and column number.")
 
-# Place ships for computer
+# placing ships for computer(totally random)
 for size, name in zip(ship_sizes, ship_names):
     while True:
         row = randrange(0, map_size)
@@ -107,11 +101,11 @@ for size, name in zip(ship_sizes, ship_names):
             comp_ships.append((name, size, ship_positions))
             break
 
-# Game loop
+# game starts here
 player_hits = 0
 comp_hits = 0
 while True:
-    # Player's turn
+    # player's turn
     print(user_name)
     try:
         row = row_labels.index(input("Enter your row (A-J): ").upper())
@@ -126,17 +120,17 @@ while True:
                     if name not in comp_sunk_ships:
                         comp_sunk_ships.append(name)
                         print(f"Computer: {name} (size {size}) has been sunk!")
-                        playsound('ship-hit-and-sunk.mp3')  # Play sink sound
+                        playsound('ship-hit-and-sunk.mp3')
                         print(f"Computer's sunk ships: {', '.join(comp_sunk_ships)}")
                         ship_sunk = True
                         break
             if not ship_sunk:
-                playsound('ship-hit.mp3')  # Play hit sound
+                playsound('ship-hit.mp3')
             player_hits += 1
         else:
             dummy_board[row][col] = "*"
             print("Missed!")
-            playsound('ship-miss.mp3')  # Play miss sound
+            playsound('ship-miss.mp3')
     except ValueError:
         print("Invalid input. Please enter a valid row letter and column number.")
         continue
@@ -145,8 +139,7 @@ while True:
         print("Player has won - game over")
         playsound('win.wav')
         break
-
-    # Computer's turn
+    # computer's turn
     while True:
         row = randrange(0, map_size)
         col = randrange(0, map_size)
@@ -162,29 +155,29 @@ while True:
                 if name not in player_sunk_ships:
                     player_sunk_ships.append(name)
                     print(f"Player: {name} (size {size}) has been sunk!")
-                    playsound('ship-hit-and-sunk.mp3')  # Play sink sound
+                    playsound('ship-hit-and-sunk.mp3')
                     print(f"Player's sunk ships: {', '.join(player_sunk_ships)}")
                     ship_sunk = True
                     break
         if not ship_sunk:
-            playsound('ship-hit.mp3')  # Play hit sound
+            playsound('ship-hit.mp3')
         comp_hits += 1
     else:
         player_board[row][col] = "*"
         print("Missed!")
-        playsound('ship-miss.mp3')  # Play miss sound
-    
+        playsound('ship-miss.mp3')
+        
     if comp_hits == sum(ship_sizes):
         print("Computer has won - game over")
         playsound('loss.wav')
         break
 
     print(f"Player {user_name} board")
-    print("  " + " ".join(str(i + 1) for i in range(len(player_board[0]))))  # Display 1-10 for columns
+    print("  " + " ".join(str(i + 1) for i in range(len(player_board[0]))))
     for i, row in enumerate(player_board):
-        print(row_labels[i] + " " + " ".join(row))  # Display A-J for rows
+        print(row_labels[i] + " " + " ".join(row))
     print(" ")
     print("Computer board")
-    print("  " + " ".join(str(i + 1) for i in range(len(dummy_board[0]))))  # Display 1-10 for columns
+    print("  " + " ".join(str(i + 1) for i in range(len(dummy_board[0]))))
     for i, row in enumerate(dummy_board):
-        print(row_labels[i] + " " + " ".join(row))  # Display A-J for rows
+        print(row_labels[i] + " " + " ".join(row))
