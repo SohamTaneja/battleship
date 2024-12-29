@@ -126,17 +126,17 @@ while True:
                     if name not in comp_sunk_ships:
                         comp_sunk_ships.append(name)
                         print(f"Computer: {name} (size {size}) has been sunk!")
-                        playsound('C:/Users/soham/Downloads/ship-hit-and-sunk.mp3')  # Play sink sound
+                        playsound('ship-hit-and-sunk.mp3')  # Play sink sound
                         print(f"Computer's sunk ships: {', '.join(comp_sunk_ships)}")
                         ship_sunk = True
                         break
             if not ship_sunk:
-                playsound('C:/Users/soham/Downloads/ship-hit.mp3')  # Play hit sound
+                playsound('ship-hit.mp3')  # Play hit sound
             player_hits += 1
         else:
             dummy_board[row][col] = "*"
             print("Missed!")
-            playsound('C:/Users/soham/Downloads/ship-miss.mp3')  # Play miss sound
+            playsound('ship-miss.mp3')  # Play miss sound
     except ValueError:
         print("Invalid input. Please enter a valid row letter and column number.")
         continue
@@ -161,17 +161,17 @@ while True:
                 if name not in player_sunk_ships:
                     player_sunk_ships.append(name)
                     print(f"Player: {name} (size {size}) has been sunk!")
-                    playsound('C:/Users/soham/Downloads/ship-hit-and-sunk.mp3')  # Play sink sound
+                    playsound('ship-hit-and-sunk.mp3')  # Play sink sound
                     print(f"Player's sunk ships: {', '.join(player_sunk_ships)}")
                     ship_sunk = True
                     break
         if not ship_sunk:
-            playsound('C:/Users/soham/Downloads/ship-hit.mp3')  # Play hit sound
+            playsound('ship-hit.mp3')  # Play hit sound
         comp_hits += 1
     else:
         player_board[row][col] = "*"
         print("Missed!")
-        playsound('C:/Users/soham/Downloads/ship-miss.mp3')  # Play miss sound
+        playsound('ship-miss.mp3')  # Play miss sound
     
     if comp_hits == sum(ship_sizes):
         print("Computer has won - game over")
