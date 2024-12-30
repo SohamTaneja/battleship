@@ -1,4 +1,4 @@
-to access, code> download zip>extract the zip file> open battleship.py on command prompt
+to access, code> download zip>extract the zip file> open battleship.py (double click)
 
 If you don't have playsound library install then install it using 
 pip install playsound (for python version before 3)
