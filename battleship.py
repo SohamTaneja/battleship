@@ -138,8 +138,6 @@ while True:
         continue
     if player_hits == sum(ship_sizes):
         print("All ships have been sunk!")
-        break
-    if player_hits == sum(ship_sizes):
         print("Player has won - game over")
         playsound('win.wav')
         break
@@ -172,6 +170,7 @@ while True:
         playsound('ship-miss.mp3')
     
     if comp_hits == sum(ship_sizes):
+        print("All ships have been sunk!")
         print("Computer has won - game over")
         playsound('loss.wav')
         break
