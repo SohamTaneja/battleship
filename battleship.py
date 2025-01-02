@@ -100,13 +100,11 @@ for size, name in zip(ship_sizes, ship_names):
                     ship_positions.append((row + i, col))
             comp_ships.append((name, size, ship_positions))
             break
-
 # game starts here
 player_hits = 0
 comp_hits = 0
 while True:
     # player's turn
-    print(user_name)
     try:
         row = row_labels.index(input("Enter your row (A-J): ").upper())
         col = int(input("Enter your col (1-10): ")) - 1
@@ -127,18 +125,25 @@ while True:
             if not ship_sunk:
                 playsound('ship-hit.mp3')
             player_hits += 1
+        elif comp_board[row][col] in ["*", "X"]:
+            print("You have already attacked this position. Please select another position.")
+            continue
         else:
+            comp_board[row][col] = "*"
             dummy_board[row][col] = "*"
             print("Missed!")
             playsound('ship-miss.mp3')
     except ValueError:
         print("Invalid input. Please enter a valid row letter and column number.")
         continue
-    
+    if player_hits == sum(ship_sizes):
+        print("All ships have been sunk!")
+        break
     if player_hits == sum(ship_sizes):
         print("Player has won - game over")
         playsound('win.wav')
         break
+    
     # computer's turn
     while True:
         row = randrange(0, map_size)
@@ -161,17 +166,16 @@ while True:
                     break
         if not ship_sunk:
             playsound('ship-hit.mp3')
-        comp_hits += 1
     else:
         player_board[row][col] = "*"
         print("Missed!")
         playsound('ship-miss.mp3')
-        
+    
     if comp_hits == sum(ship_sizes):
         print("Computer has won - game over")
         playsound('loss.wav')
         break
-
+    
     print(f"Player {user_name} board")
     print("  " + " ".join(str(i + 1) for i in range(len(player_board[0]))))
     for i, row in enumerate(player_board):
